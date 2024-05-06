@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import "./index.css";
 
 const pizzaData = [
 	{
@@ -47,16 +48,50 @@ const pizzaData = [
 ];
 
 function Header() {
-	return <h1>Fast React Pizza Co.</h1>;
+	return (
+		<header className="header">
+			<h1>Fast React Pizza Co.</h1>
+		</header>
+	);
 }
 function Menu() {
+	const pizzas = pizzaData;
+	const numPizzas = pizzas.length;
+
 	return (
-		<div>
+		<main className="menu">
 			<h2>Our menu</h2>
-			<Pizza />
-			<Pizza />
-			<Pizza />
-		</div>
+			{numPizzas > 0 ? (
+				<ul className="pizzas">
+					{pizzaData.map((pizza) => (
+						<Pizza pizzaObj={pizza} key={pizza.name} />
+					))}
+				</ul>
+			) : (
+				<p>No pizzas :(</p>
+			)}
+			{/* <Pizza
+				name="Pizza Spinaci"
+				ingredient="Tomato, mozarella, spinach and ricotta cheese"
+				photoName="pizzas/spinaci.jpg"
+				price={10}
+			/>
+			<Pizza name="Pizza Funghi" ingredients="Tomato, mushrooms" photoName="pizzas/funghi.jpg" price={12} /> */}
+		</main>
+	);
+}
+function Pizza(props) {
+	if (props.pizzaObj.soldOut) return null;
+
+	return (
+		<li className="pizza">
+			<img src={props.pizzaObj.photoName} alt={props.pizzaObj.name} />
+			<div>
+				<h3>{props.pizzaObj.name}</h3>
+				<p>{props.pizzaObj.ingredients}</p>
+				<span>{props.pizzaObj.price}</span>
+			</div>
+		</li>
 	);
 }
 
@@ -68,21 +103,31 @@ function Footer() {
 	console.log(isOpen);
 
 	// if (hour >= openHour && hour <= closeHour) alert("We're currently open!");
-	// return <footer>{new Date().toLocaleTimeString()}. We're currently open</footer>;
+	return (
+		<footer className="footer">
+			{isOpen ? (
+				<div className="order">
+					<p>We're open until {closeHour}:00. Come visit us, or order online.</p>
+					<button className="btn">Order</button>
+				</div>
+			) : (
+				<div className="order">
+					<p>We're closed right now, but we open at {openHour}:00. Come visit us, or order online.</p>
+					<button className="btn">Order</button>
+				</div>
+			)}
+		</footer>
+	);
 }
 
 function App() {
 	return (
-		<div>
+		<div className="container">
 			<Header />
 			<Menu />
 			<Footer />
 		</div>
 	);
-}
-
-function Pizza() {
-	return <h2>Pizza</h2>;
 }
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
