@@ -45,7 +45,6 @@ export default function App() {
 				friend.id === selectedFriend.id ? { ...friend, balance: friend.balance + value } : friend
 			)
 		);
-		setSelectedFriend(null);
 	}
 	return (
 		<div className="app">
