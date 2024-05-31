@@ -16,10 +16,21 @@ StarRating.propTypes = {
 	color: PropTypes.string,
 	size: PropTypes.number,
 };
-export default function StarRating({ maxRating = 5, color = "#fcc419", size = 25, className = "", defaultRating = 0 }) {
+export default function StarRating({
+	maxRating = 5,
+	color = "#fcc419",
+	size = 25,
+	className = "",
+	defaultRating = 0,
+	onSetRating,
+}) {
 	const [rating, setRating] = useState(defaultRating);
 	const [hover, setHover] = useState(0);
 
+	function handleRating(rating) {
+		setRating(rating);
+		onSetRating && onSetRating(rating);
+	}
 	const textStyle = {
 		lineHeight: "1",
 		margin: "0",
@@ -32,7 +43,7 @@ export default function StarRating({ maxRating = 5, color = "#fcc419", size = 25
 				{Array.from({ length: maxRating }, (_, i) => (
 					<Star
 						key={i}
-						onRate={() => setRating(i + 1)}
+						onRate={() => handleRating(i + 1)}
 						full={hover ? hover >= i + 1 : rating >= i + 1}
 						onHoverIn={() => setHover(i + 1)}
 						onHoverOut={() => setHover(0)}
