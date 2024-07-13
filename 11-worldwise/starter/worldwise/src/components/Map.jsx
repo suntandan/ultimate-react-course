@@ -4,17 +4,14 @@ import { MapContainer, TileLayer, Marker, Popup, useMap, useMapEvents } from "re
 import { useEffect, useState } from "react";
 import { useCities } from "../contexts/CitiesContext";
 import { useGeolocation } from "./hooks/useGeoLocation";
+import { useUrlPosition } from "./hooks/useUrlPosition";
 import Button from "./Button";
 
 function Map() {
-	const navigate = useNavigate();
 	const { cities } = useCities();
 	const [mapPosition, setMapPosition] = useState([40, 0]);
-	const [searchParams, setSearchParams] = useSearchParams();
 	const { isLoading: isLoadingPosition, position: geolocationPosition, getPosition } = useGeolocation();
-
-	const mapLat = searchParams.get("lat");
-	const mapLng = searchParams.get("lng");
+	const [mapLat, mapLng] = useUrlPosition();
 
 	useEffect(
 		function () {
@@ -32,7 +29,7 @@ function Map() {
 		[geolocationPosition]
 	);
 	return (
-		<div className={styles.mapContainer} onClick={() => navigate("form")}>
+		<div className={styles.mapContainer}>
 			{!geolocationPosition && (
 				<Button type="position" onClick={getPosition}>
 					{isLoadingPosition ? "Loading..." : "Use current position"}
