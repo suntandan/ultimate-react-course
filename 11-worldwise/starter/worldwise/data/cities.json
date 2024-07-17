@@ -59,18 +59,6 @@
         "lat": "-20.037406401764574",
         "lng": "57.545437216758735"
       }
-    },
-    {
-      "id": "e508",
-      "cityName": "Pamplemousses",
-      "country": "Mauritius",
-      "emoji": "🇲🇺",
-      "date": "2024-06-26T18:38:20.000Z",
-      "notes": "Fridde til Maren",
-      "position": {
-        "lat": "-20.022649452273342",
-        "lng": "57.55222320556641"
-      }
     }
   ]
 }
