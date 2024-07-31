@@ -89,9 +89,9 @@ function Row({ children }) {
 	);
 }
 
-function Body({ children }) {
-	const { columns } = useContext(TableContext);
-	return console.log("test");
+function Body({ data, render }) {
+	if (!data.length) return <Empty>No data available</Empty>;
+	return <StyledBody>{data.map(render)}</StyledBody>;
 }
 
 Table.Header = Header;
