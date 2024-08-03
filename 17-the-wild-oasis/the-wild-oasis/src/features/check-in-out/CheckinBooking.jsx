@@ -14,6 +14,7 @@ import Spinner from "../../ui/Spinner";
 import { useEffect, useState } from "react";
 import { formatCurrency } from "../../utils/helpers";
 import { useCheckin } from "./useCheckin";
+import { useSettings } from "../settings/useSettings";
 
 const Box = styled.div`
 	/* Box */
@@ -25,21 +26,35 @@ const Box = styled.div`
 
 function CheckinBooking() {
 	const [confirmPaid, setConfirmPaid] = useState(false);
+	const [addBreakfast, setAddBreakfast] = useState(false);
 	const { booking, isPending } = useBooking();
+	const { settings, isPending: isSettingsPending } = useSettings();
 	const moveBack = useMoveBack();
 	const { checkin, isCheckingIn } = useCheckin();
-
+	const breakfastPrice = settings?.breakfastPrice * booking?.numGuests * booking?.numNights;
 	useEffect(() => setConfirmPaid(booking?.isPaid ?? false), [booking]);
 
-	if (isPending) return <Spinner />;
+	if (isPending || isSettingsPending) return <Spinner />;
 
 	const { id: bookingId, guests, totalPrice, numGuests, hasBreakfast, numNights } = booking;
 	console.log(bookingId, guests, totalPrice, numGuests, hasBreakfast, numNights, Box, BookingDataBox);
 
 	function handleCheckin() {
 		if (!confirmPaid) return;
-		checkin(bookingId);
+		if (addBreakfast) {
+			checkin({
+				bookingId,
+				breakfast: {
+					hasBreakfast: true,
+					extrasPrice: breakfastPrice,
+					totalPrice: totalPrice + breakfastPrice,
+				},
+			});
+		} else {
+			checkin({ bookingId, breakfast: {} });
+		}
 	}
+	console.log(settings);
 
 	return (
 		<>
@@ -49,14 +64,32 @@ function CheckinBooking() {
 			</Row>
 
 			<BookingDataBox booking={booking} />
-
+			{!hasBreakfast && (
+				<Box>
+					<Checkbox
+						checked={addBreakfast}
+						onChange={() => {
+							setAddBreakfast((add) => !add);
+							setConfirmPaid(false);
+						}}
+						id="addBreakfast"
+						disabled={isSettingsPending}>
+						Add breakfast for {formatCurrency(breakfastPrice)}
+					</Checkbox>
+				</Box>
+			)}
 			<Box>
 				<Checkbox
 					checked={confirmPaid}
 					onChange={() => setConfirmPaid((confirm) => !confirm)}
 					id="confirm"
 					disabled={confirmPaid || isCheckingIn}>
-					I confirm that {guests.name} has paid the total amount of {formatCurrency(totalPrice)}.
+					I confirm that {guests.name} has paid the total amount of{" "}
+					{!addBreakfast
+						? formatCurrency(totalPrice)
+						: `${formatCurrency(totalPrice + breakfastPrice)}  
+						   (${formatCurrency(totalPrice)} +  ${formatCurrency(breakfastPrice)})`}
+					.
 				</Checkbox>
 			</Box>
 
