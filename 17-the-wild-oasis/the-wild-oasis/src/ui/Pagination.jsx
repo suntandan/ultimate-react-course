@@ -99,5 +99,3 @@ function Pagination({ count }) {
 	);
 }
 export default Pagination;
-
-console.log(PaginationButton, Buttons);

@@ -9,7 +9,6 @@ function UpdateSettingsForm() {
 	const { isPending, settings: { minBookingLength, maxBookingLength, maxGuestsPerBooking, breakfastPrice } = {} } =
 		useSettings();
 	const { updateSetting, isUpdating } = useUpdateSetting();
-	console.log(updateSetting, isUpdating);
 
 	if (isPending) return <Spinner />;
 

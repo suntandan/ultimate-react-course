@@ -44,18 +44,15 @@ const Amount = styled.div`
 function BookingRow({
 	booking: {
 		id: bookingId,
-		created_at,
 		startDate,
 		endDate,
 		numNights,
-		numGuests,
 		totalPrice,
 		status,
 		guests: { name: guestName, email },
 		cabins: { name: cabinName },
 	},
 }) {
-	console.log(bookingId, created_at, numGuests);
 	const navigate = useNavigate();
 	const { checkout, isCheckingOut } = useCheckout();
 	const { isDeleting, deleteBooking } = useDeleteBooking();

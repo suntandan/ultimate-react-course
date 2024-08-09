@@ -28,6 +28,7 @@ function SignupForm() {
 				<Input
 					type="text"
 					id="fullName"
+					autoComplete="name"
 					disabled={isPending}
 					{...register("fullName", { required: "This field is required" })}
 				/>
@@ -37,6 +38,7 @@ function SignupForm() {
 				<Input
 					type="email"
 					id="email"
+					autoComplete="email"
 					disabled={isPending}
 					{...register("email", {
 						required: "This field is required",
@@ -61,6 +63,7 @@ function SignupForm() {
 				<Input
 					type="password"
 					id="passwordConfirm"
+					autoComplete="new-password"
 					disabled={isPending}
 					{...register("passwordConfirm", {
 						required: "This field is required",

@@ -15,7 +15,5 @@ export function useBooking() {
 		retry: false,
 	});
 
-	console.log(booking, typeof bookingId);
-
 	return { isPending, booking, error };
 }
