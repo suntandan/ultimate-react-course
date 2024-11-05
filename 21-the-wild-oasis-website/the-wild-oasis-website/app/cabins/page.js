@@ -1,4 +1,6 @@
+import { Suspense } from "react";
 import CabinList from "../_components/CabinList";
+import Spinner from "../_components/Spinner";
 
 export const metadata = {
 	title: "Cabins",
@@ -14,8 +16,9 @@ export default async function Page() {
 				under the stars. Enjoy nature&apos;s beauty in your own little home away from home. The perfect spot for a
 				peaceful, calm vacation. Welcome to paradise.
 			</p>
-
-			<CabinList />
+			<Suspense fallback={<Spinner />}>
+				<CabinList />
+			</Suspense>
 		</div>
 	);
 }
