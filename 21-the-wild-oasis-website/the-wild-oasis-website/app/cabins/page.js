@@ -2,6 +2,9 @@ import { Suspense } from "react";
 import CabinList from "../_components/CabinList";
 import Spinner from "../_components/Spinner";
 
+//Revalidate on the ROUTE level: Setting the revalidate to 3600 seconds (1 hour) to make sure the data is always fresh
+export const revalidate = 3600;
+
 export const metadata = {
 	title: "Cabins",
 };
