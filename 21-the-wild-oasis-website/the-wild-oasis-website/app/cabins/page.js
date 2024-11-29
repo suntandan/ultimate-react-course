@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import CabinList from "../_components/CabinList";
 import Spinner from "../_components/Spinner";
 import Filter from "../_components/Filter";
+import ReservationReminder from "../_components/ReservationReminder";
 
 //Revalidate on the ROUTE level: Setting the revalidate to 3600 seconds (1 hour) to make sure the data is always fresh
 export const revalidate = 3600;
@@ -27,6 +28,7 @@ export default async function Page({ searchParams }) {
 			</div>
 			<Suspense fallback={<Spinner key={filter} />}>
 				<CabinList filter={filter} />
+				<ReservationReminder />
 			</Suspense>
 		</div>
 	);
